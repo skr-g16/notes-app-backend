@@ -12,18 +12,18 @@ const routes = [
     handler: getAllnotesHandler,
   },
   {
-    method:"GET",
-    path:"/notes/{id}",
+    method:'GET',
+    path:'/notes/{id}',
     handler: getByIdHandler,
   },
   {
-    method:"PUT",
-    path:"/notes/{id}",
+    method:'PUT',
+    path:'/notes/{id}',
     handler: editnoteHandler,
   },
   {
-    method:"DELETE",
-    path:"/notes/{id}",
+    method:'DELETE',
+    path:'/notes/{id}',
     handler: deletenoteHandler,
   }
 

@@ -31,29 +31,29 @@ const addnoteHandler = (request, h) => {
   return response;
 };
 const getAllnotesHandler = () => ({
-  status:"succes",
+  status:'succes',
   data: {
     notes,
   },
-})
+});
 const getByIdHandler = (request, h) => {
   const { id } = request.params;
   const note = notes.filter((n) => n.id === id)[0];
   if (note !== undefined) {
-    return{
-      status: "succes",
+    return {
+      status: 'succes',
       data: {
         note,
       },
-    }
+    };
   }
   const response = h.response({
-    status: "fail",
-    message: "Catatan tidak ditemukan",
-  })
-  response.code(404)
-  return response
-}
+    status: 'fail',
+    message: 'Catatan tidak ditemukan',
+  });
+  response.code(404);
+  return response;
+};
 
 const editnoteHandler = (request, h) => {
   const { id } = request.params;
@@ -67,21 +67,21 @@ const editnoteHandler = (request, h) => {
       tags,
       body,
       updatedAt,
-    }
+    };
     const response = h.response({
-      status:"succes",
-      message:"Catatan berhasil diperbarui",
-    })
+      status:'succes',
+      message:'Catatan berhasil diperbarui',
+    });
     response.code(200);
     return response;
   }
   const response = h.response({
-    status:"fail",
+    status:'fail',
     message:'Gagal memperbarui catatan. Id tidak ditemukan',
-  })
+  });
   response.code(404);
-  return response
-}
+  return response;
+};
 
 const deletenoteHandler = (request, h) => {
   const { id } = request.params;
@@ -89,17 +89,17 @@ const deletenoteHandler = (request, h) => {
   if (index !== -1) {
     notes.splice(index, 1);
     const response = h.response({
-      status:"succes",
-      message:"Catatan berhasil dihapus",
-    })
+      status:'succes',
+      message:'Catatan berhasil dihapus',
+    });
     response.code(200);
     return response;
   }
   const response = h.response({
-    status:"fail",
+    status:'fail',
     message:'Catatan gagal dihapus. Id tidak ditemukan',
-  })
+  });
   response.code(404);
-  return response
-}
-module.exports = {addnoteHandler, getAllnotesHandler, getByIdHandler, editnoteHandler, deletenoteHandler};
+  return response;
+};
+module.exports = { addnoteHandler, getAllnotesHandler, getByIdHandler, editnoteHandler, deletenoteHandler };
