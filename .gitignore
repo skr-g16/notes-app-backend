@@ -3,5 +3,3 @@ skr-api-webserver.pem
 note-api-test-environment.json
 note-api-test-collection.json
 .prettierrc
-.env
-.prod.env
