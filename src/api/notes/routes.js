@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 const routes = (handler) => [
   {
     method: 'POST',
