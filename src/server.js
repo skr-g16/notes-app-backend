@@ -1,4 +1,5 @@
 const Hapi = require('@hapi/hapi');
+const jwt = require('@hapi/jwt');
 const clientError = require('./exceptions/clientError');
 
 //notes
@@ -32,6 +33,29 @@ const init = async () => {
       },
     },
   });
+  //register jwt
+  await server.register([
+    {
+      plugin: jwt,
+    },
+  ]);
+  //define auth strategy
+  server.auth.strategy('notesapp_jwt', 'jwt', {
+    keys: process.env.ACCESS_TOKEN_KEY,
+    verify: {
+      aud: false,
+      iss: false,
+      sub: false,
+      maxAgeSec: process.env.ACCESS_TOKEN_AGE,
+    },
+    validate: (artifacts) => ({
+      isValid: true,
+      credentials: {
+        id: artifacts.decoded.payload.id,
+      },
+    }),
+  });
+
   await server.register([
     {
       plugin: notes,
