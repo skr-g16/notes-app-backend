@@ -14,7 +14,7 @@ const usersValidator = require('./validator/users');
 
 //authentications
 const authentications = require('./api/authentications');
-const authenticationsService = require('./services/postgres/authenticationsServices');
+const authenticationsService = require('./services/postgres/AuthenticationsServices');
 const authenticationsValidator = require('./validator/authentications');
 const TokenManager = require('./tokenize/tokenManager');
 //env
