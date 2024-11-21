@@ -10,12 +10,19 @@ const notesValidator = require('./validator/notes');
 const users = require('./api/users');
 const usersService = require('./services/postgres/usersServices');
 const usersValidator = require('./validator/users');
+
+//authentications
+const authentications = require('./api/authentications');
+const authenticationsService = require('./services/postgres/authenticationsServices');
+const authenticationsValidator = require('./validator/authentications');
+const TokenManager = require('./tokenize/tokenManager');
 //env
 require('dotenv').config();
 
 const init = async () => {
   const NotesServices = new notesService();
   const UsersServices = new usersService();
+  const AuthenticationsServices = new authenticationsService();
   const server = Hapi.server({
     port: process.env.PORT,
     host: process.env.HOST,
@@ -38,6 +45,15 @@ const init = async () => {
       options: {
         service: UsersServices,
         validator: usersValidator,
+      },
+    },
+    {
+      plugin: authentications,
+      options: {
+        authenticationsServices: AuthenticationsServices,
+        usersServices: UsersServices,
+        validator: authenticationsValidator,
+        tokenManager: TokenManager,
       },
     },
   ]);
