@@ -6,8 +6,10 @@ const { Pool } = require('pg');
 const { mapDBToModel } = require('../../utils');
 
 class notesService {
-  constructor() {
+  constructor(CollaborationsServices) {
     this._pool = new Pool();
+    this._collaborationsServices = CollaborationsServices;
+    console.log(CollaborationsServices);
   }
 
   async addNote({ title, body, tags, owner }) {
@@ -83,6 +85,21 @@ class notesService {
     const note = result.rows[0];
     if (note.owner !== owner) {
       throw new authorizationError('Anda tidak berhak mengakses resource ini');
+    }
+  }
+
+  async verifyNoteAccess(noteId, userId) {
+    try {
+      await this.verifyNoteOwner(noteId, userId);
+    } catch (error) {
+      if (error instanceof notFoundError) {
+        throw error;
+      }
+      try {
+        await this._collaborationsServices.verifyCollaboration(noteId, userId);
+      } catch {
+        throw error;
+      }
     }
   }
 }
