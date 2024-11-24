@@ -27,7 +27,7 @@ require('dotenv').config();
 
 const init = async () => {
   const CollaborationsServices = new collaborationsService();
-  const NotesServices = new notesService();
+  const NotesServices = new notesService(CollaborationsServices);
   const UsersServices = new usersService();
   const AuthenticationsServices = new authenticationsService();
   const server = Hapi.server({

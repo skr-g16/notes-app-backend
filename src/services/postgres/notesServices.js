@@ -9,7 +9,6 @@ class notesService {
   constructor(CollaborationsServices) {
     this._pool = new Pool();
     this._collaborationsServices = CollaborationsServices;
-    console.log(CollaborationsServices);
   }
 
   async addNote({ title, body, tags, owner }) {
@@ -31,7 +30,10 @@ class notesService {
 
   async getNotes(owner) {
     const query = {
-      text: 'SELECT * FROM notes WHERE owner = $1',
+      text: `SELECT * FROM notes
+    LEFT JOIN collaborations ON collaborations.note_id = notes.id
+    WHERE notes.owner = $1 OR collaborations.user_id = $1
+    GROUP BY notes.id`,
       values: [owner],
     };
     const result = await this._pool.query(query);
