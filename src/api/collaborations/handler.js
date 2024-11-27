@@ -29,7 +29,7 @@ class collaborationsHandler {
   }
 
   async deleteCollaborationHandler(request) {
-    this._validator.validateCollaborationPayload(request.payload);
+    this._validator.validatePostCollaborationPayload(request.payload);
     const { id: credentialId } = request.auth.credentials;
     const { noteId, userId } = request.payload;
     await this._notesServices.verifyNoteAccess(noteId, credentialId);

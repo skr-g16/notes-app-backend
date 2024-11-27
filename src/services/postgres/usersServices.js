@@ -53,6 +53,18 @@ class UsersService {
     return result.rows[0];
   }
 
+  async getUsersByUsername(username) {
+    const query = {
+      text: 'SELECT id, username, fullname FROM users WHERE username LIKE $1',
+      values: [`%${username}%`],
+    };
+    const result = await this._pool.query(query);
+    if (!result.rows.length) {
+      throw new notFoundError('User tidak ditemukan');
+    }
+    return result.rows;
+  }
+
   async verifyUserCredential(username, password) {
     const query = {
       text: 'SELECT id, password FROM users WHERE username = $1',
