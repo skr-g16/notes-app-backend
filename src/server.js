@@ -22,6 +22,11 @@ const TokenManager = require('./tokenize/tokenManager');
 const collaborations = require('./api/collaborations');
 const collaborationsService = require('./services/postgres/collaborationsServices');
 const collaborationsValidator = require('./validator/collaborations');
+
+//export
+const _exports = require('./api/exports');
+const producerServices = require('./services/rabbitmq/producerServices');
+const exportsValidator = require('./validator/exports');
 //env
 require('dotenv').config();
 
@@ -92,6 +97,13 @@ const init = async () => {
         CollaborationsServices,
         NotesServices,
         validator: collaborationsValidator,
+      },
+    },
+    {
+      plugin: _exports,
+      options: {
+        service: producerServices,
+        validator: exportsValidator,
       },
     },
   ]);
