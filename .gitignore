@@ -5,3 +5,4 @@ note-api-test-collection.json
 .prettierrc
 .env
 .prod.env
+src/api/uploads/file
