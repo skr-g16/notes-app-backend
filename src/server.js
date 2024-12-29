@@ -55,6 +55,7 @@ const init = async () => {
       },
     },
   });
+
   //register jwt
   await server.register([
     {
