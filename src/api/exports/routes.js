@@ -1,7 +1,7 @@
 const routes = (handler) => [
   {
     method: 'POST',
-    path: '/exports/notes',
+    path: '/export/notes',
     handler: handler.postExportPlaylistHandler,
     options: {
       auth: 'notesapp_jwt',
