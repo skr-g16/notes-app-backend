@@ -35,7 +35,7 @@ const StorageServices = require('./services/S3/storageService');
 const UploadsValidator = require('./validator/uploads');
 
 //cache
-const CacheServices = require('./services/redis/cacheServices');
+const CacheServices = require('./services/Redis/cacheServices');
 
 //env
 require('dotenv').config();
