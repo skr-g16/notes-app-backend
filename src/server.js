@@ -2,7 +2,6 @@ const Hapi = require('@hapi/hapi');
 const jwt = require('@hapi/jwt');
 const Inert = require('@hapi/inert');
 const clientError = require('./exceptions/clientError');
-const path = require('path');
 
 //notes
 const notes = require('./api/notes');
@@ -32,7 +31,7 @@ const exportsValidator = require('./validator/exports');
 
 //uploads
 const uploads = require('./api/uploads');
-const StorageServices = require('./services/storage/storageServices');
+const StorageServices = require('./services/S3/storageService');
 const UploadsValidator = require('./validator/uploads');
 
 //env
@@ -43,9 +42,7 @@ const init = async () => {
   const NotesServices = new notesService(CollaborationsServices);
   const UsersServices = new usersService();
   const AuthenticationsServices = new authenticationsService();
-  const storageServices = new StorageServices(
-    path.resolve(__dirname, 'api/uploads/file/images'),
-  );
+  const storageServices = new StorageServices();
   const server = Hapi.server({
     port: process.env.PORT,
     host: process.env.HOST,
