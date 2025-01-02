@@ -34,12 +34,16 @@ const uploads = require('./api/uploads');
 const StorageServices = require('./services/S3/storageService');
 const UploadsValidator = require('./validator/uploads');
 
+//cache
+const CacheServices = require('./services/redis/cacheServices');
+
 //env
 require('dotenv').config();
 
 const init = async () => {
-  const CollaborationsServices = new collaborationsService();
-  const NotesServices = new notesService(CollaborationsServices);
+  const cacheServices = new CacheServices();
+  const CollaborationsServices = new collaborationsService(cacheServices);
+  const NotesServices = new notesService(CollaborationsServices, cacheServices);
   const UsersServices = new usersService();
   const AuthenticationsServices = new authenticationsService();
   const storageServices = new StorageServices();

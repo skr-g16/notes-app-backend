@@ -2,8 +2,9 @@ const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
 const invariantError = require('../../exceptions/invariantError');
 class collaborationsServices {
-  constructor() {
+  constructor(cacheServices) {
     this._pool = new Pool();
+    this._cacheSevices = cacheServices;
   }
 
   async addCollaboration(noteId, userId) {
@@ -16,6 +17,7 @@ class collaborationsServices {
     if (!result.rows.length) {
       throw new invariantError('Kolaborasi gagal ditambahkan');
     }
+    await this._cacheSevices.delete(`notes:${userId}`);
     return result.rows[0].id;
   }
 
@@ -28,6 +30,7 @@ class collaborationsServices {
     if (!result.rows.length) {
       throw new invariantError('Kolaborasi gagal dihapus');
     }
+    await this._cacheSevices.delete(`notes:${userId}`);
   }
 
   async verifyCollaboration(noteId, userId) {
